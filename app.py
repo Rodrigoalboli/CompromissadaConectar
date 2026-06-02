@@ -29,7 +29,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ── Cabeçalho ────────────────────────────────────────────────────────────────
-st.title("💰 Simulador de Compromissada — Liquidez Diária")
+col_logo, col_title = st.columns([1, 9])
+with col_logo:
+    st.image("logo_conectar.png", width=90)
+with col_title:
+    st.title("Simulador de Compromissada")
 st.caption(
     "Baseado na tabela XP · **Taxa Máx: 85% CDI** · **IR: 22,5%** · **Taxa de Consultoria: 0,5% a.a.**"
 )
@@ -46,8 +50,8 @@ with col_cdi:
     cdi_anual = st.number_input(
         "📊 Taxa CDI anual (%)",
         min_value=0.01, max_value=30.0,
-        value=14.75, step=0.05, format="%.2f",
-        help="Informe a taxa CDI vigente. Atualmente em torno de 14,75% a.a."
+        value=14.50, step=0.05, format="%.2f",
+        help="Informe a taxa CDI vigente. Atualmente em torno de 14,50% a.a."
     )
 
 with col_info:
@@ -157,43 +161,6 @@ totais_row = pd.DataFrame(
 )
 st.dataframe(totais_row, use_container_width=True, height=80)
 
-st.divider()
-
-# ── Gráfico ───────────────────────────────────────────────────────────────────
-st.subheader("📊 Visualização")
-
-fig = go.Figure()
-
-fig.add_trace(go.Bar(
-    name="Rend. Bruto",
-    x=DIAS,
-    y=[df.loc[d, "Rend. Bruto"] for d in DIAS],
-    marker_color="#93c5fd",
-    text=[f"R$ {df.loc[d, 'Rend. Bruto']:,.2f}" for d in DIAS],
-    textposition="outside",
-))
-fig.add_trace(go.Bar(
-    name="Rend. Líquido",
-    x=DIAS,
-    y=[df.loc[d, "Rend. Líquido"] for d in DIAS],
-    marker_color="#1a56db",
-    text=[f"R$ {df.loc[d, 'Rend. Líquido']:,.2f}" for d in DIAS],
-    textposition="outside",
-))
-
-fig.update_layout(
-    barmode="group",
-    title="Rendimento Bruto vs. Líquido por Dia (R$)",
-    xaxis_title="Dia da semana",
-    yaxis_title="R$",
-    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-    height=420,
-    plot_bgcolor="white",
-    paper_bgcolor="white",
-    yaxis=dict(gridcolor="#f1f5f9"),
-)
-
-st.plotly_chart(fig, use_container_width=True)
 
 # ── Nota de rodapé ───────────────────────────────────────────────────────────
 st.markdown("""
