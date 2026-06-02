@@ -3,10 +3,18 @@ import pandas as pd
 import plotly.graph_objects as go
 
 st.set_page_config(
-    page_title="Simulador Compromissada",
+    page_title="Simulador Compromissada | Conectar",
     page_icon="💰",
     layout="wide",
 )
+
+st.markdown("""
+<head>
+<meta property="og:title" content="Simulador Compromissada | Conectar" />
+<meta property="og:description" content="Simule sua operação compromissada e veja a rentabilidade projetada." />
+<meta property="og:image" content="https://compromissada.streamlit.app/~/+/media/logo_conectar.png" />
+</head>
+""", unsafe_allow_html=True)
 
 # ── Estilo ──────────────────────────────────────────────────────────────────
 st.markdown("""
